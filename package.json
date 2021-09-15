@@ -1,0 +1,25 @@
+{
+	"name": "pagseguro-teste-2021",
+	"version": "1.0.0",
+	"description": "",
+	"main": "paymentBodyBuilder.js",
+	"type": "module",
+	"scripts": {
+		"start": "nodemon main.js"
+	},
+	"keywords": [],
+	"author": "",
+	"license": "ISC",
+	"dependencies": {
+		"@fortawesome/fontawesome-free": "^5.15.4",
+		"axios": "^0.21.1",
+		"cors": "^2.8.5",
+		"express": "^4.17.1",
+		"fast-xml-parser": "^3.19.0",
+		"js2xmlparser": "^4.0.1",
+		"nodemon": "^2.0.12"
+	},
+	"browserslist": [
+		"last 1 Chrome versions"
+	]
+}
