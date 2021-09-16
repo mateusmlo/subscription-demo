@@ -30,14 +30,11 @@
 				<div class="tile is-ancestor">
 					<div class="tile is-vertical is-8">
 						<div class="tile">
-							<div class="tile is-parent is-vertical">
+							<div class="tile is-parent is-vertical" id="checkout-tile">
 								<article class="tile is-child notification">
-									<span class="icon is-left">
-										<i class="fas fa-credit-card"></i>
-									</span>
 									<p class="title is-2">Checkout</p>
 
-									<form method="POST" id="checkoutForm">
+									<form method="POST" id="CheckoutForm">
 										<div class="columns">
 											<div class="field column is-two-thirds">
 												<p class="control">
@@ -47,7 +44,6 @@
 														type="text"
 														placeholder="Sender Hash"
 														id="senderHash"
-														value=""
 													/>
 												</p>
 											</div>
@@ -76,9 +72,6 @@
 													<span class="icon is-small is-left">
 														<i class="fas fa-envelope"></i>
 													</span>
-													<span class="icon is-small is-right">
-														<i class="fas fa-check"></i>
-													</span>
 												</p>
 											</div>
 											<div class="field column">
@@ -98,7 +91,223 @@
 
 										<div class="columns">
 											<div class="field column is-one-fifth">
+												<p class="control">
+													<input
+														required
+														class="input"
+														type="text"
+														placeholder="DDD"
+													/>
+												</p>
+											</div>
+											<div class="field column is-one-quarter">
+												<p class="control has-icons-left">
+													<input
+														required
+														class="input"
+														type="tel"
+														placeholder="Telefone"
+													/>
+													<span class="icon is-small is-left">
+														<i class="fas fa-phone"></i>
+													</span>
+												</p>
+											</div>
+											<div class="field column">
+												<p class="control has-icons-left">
+													<input
+														required
+														class="input"
+														type="text"
+														placeholder="CPF"
+													/>
+													<span class="icon is-small is-left">
+														<i class="fas fa-id-card"></i>
+													</span>
+													<small>*Apenas números</small>
+												</p>
+											</div>
+										</div>
+
+										<div class="columns">
+											<div class="field column is-half">
 												<p class="control has-icons-left has-icons-right">
+													<input
+														required
+														class="input"
+														type="text"
+														placeholder="Endereço"
+													/>
+													<span class="icon is-left">
+														<i class="fas fa-building"></i>
+													</span>
+												</p>
+											</div>
+											<div class="field column is-one-fifth">
+												<p class="control">
+													<input
+														required
+														class="input"
+														type="text"
+														placeholder="Numero"
+													/>
+												</p>
+											</div>
+											<div class="field column">
+												<p class="control">
+													<input
+														id="senderComplement"
+														class="input"
+														type="text"
+														placeholder="Complemento"
+													/>
+												</p>
+											</div>
+										</div>
+
+										<div class="columns">
+											<div class="field column is-one-quarter">
+												<p class="control">
+													<input
+														required
+														class="input"
+														type="text"
+														placeholder="CEP"
+													/>
+												</p>
+											</div>
+											<div class="field column">
+												<p class="control">
+													<input
+														required
+														class="input"
+														type="text"
+														placeholder="Bairro"
+													/>
+												</p>
+											</div>
+											<div class="field column is-one-fifth">
+												<p class="control">
+													<input
+														required
+														class="input"
+														type="text"
+														placeholder="Cidade"
+													/>
+												</p>
+											</div>
+											<div class="field column">
+												<p class="control">
+													<input
+														required
+														class="input"
+														type="text"
+														placeholder="Estado"
+													/>
+												</p>
+											</div>
+										</div>
+
+										<br />
+										<h2 class="subtitle is-4">Dados de pagamento</h2>
+										<div class="columns">
+											<div class="field column is-one-quarter">
+												<p class="control has-icons-left">
+													<input
+														required
+														class="input"
+														type="text"
+														placeholder="Nº cartão"
+													/>
+													<span class="icon is-small is-left">
+														<i class="fas fa-credit-card"></i>
+													</span>
+												</p>
+											</div>
+											<div class="field column">
+												<p class="control">
+													<input
+														required
+														class="input"
+														type="text"
+														placeholder="Bandeira"
+													/>
+												</p>
+											</div>
+											<div class="field column is-one-fifth">
+												<p class="control">
+													<input
+														required
+														class="input"
+														type="text"
+														placeholder="CVV"
+													/>
+												</p>
+											</div>
+											<div class="field column is-one-fifth">
+												<p class="control">
+													<input
+														required
+														class="input"
+														type="text"
+														placeholder="Mês exp"
+													/>
+												</p>
+											</div>
+											<div class="field column is-one-fifth">
+												<p class="control">
+													<input
+														required
+														class="input"
+														type="text"
+														placeholder="Ano exp"
+													/>
+												</p>
+											</div>
+										</div>
+
+										<div class="columns">
+											<div class="field column is-half">
+												<p class="control has-icons-left has-icons-right">
+													<input
+														required
+														class="input"
+														type="email"
+														placeholder="Nome"
+													/>
+													<span class="icon is-small is-left">
+														<i class="fas fa-envelope"></i>
+													</span>
+													<small>*Como consta no cartão</small>
+												</p>
+											</div>
+											<div class="field column">
+												<p class="control">
+													<input
+														required
+														class="input"
+														type="text"
+														placeholder="Data de nasc."
+													/>
+													<small>*No formato DD/MM/AAAA</small>
+												</p>
+											</div>
+											<div class="field column">
+												<p class="control">
+													<input
+														required
+														class="input"
+														type="text"
+														placeholder="CPF"
+													/>
+													<small>*Apenas números</small>
+												</p>
+											</div>
+										</div>
+
+										<div class="columns">
+											<div class="field column is-one-fifth">
+												<p class="control">
 													<input
 														required
 														class="input"
@@ -150,7 +359,7 @@
 												</p>
 											</div>
 											<div class="field column is-one-fifth">
-												<p class="control has-icons-left">
+												<p class="control">
 													<input
 														required
 														class="input"
@@ -160,9 +369,9 @@
 												</p>
 											</div>
 											<div class="field column">
-												<p class="control has-icons-left">
+												<p class="control">
 													<input
-														required
+														id="paymentComplement"
 														class="input"
 														type="text"
 														placeholder="Complemento"
@@ -172,7 +381,7 @@
 										</div>
 
 										<div class="columns">
-											<div class="field column">
+											<div class="field column is-one-quarter">
 												<p class="control has-icons-left">
 													<input
 														required
@@ -182,7 +391,7 @@
 													/>
 												</p>
 											</div>
-											<div class="field column is-one-quarter">
+											<div class="field column">
 												<p class="control has-icons-left has-icons-right">
 													<input
 														required
@@ -214,11 +423,6 @@
 											</div>
 										</div>
 
-										<h2 class="subtitle is-4">Dados de pagamento</h2>
-										<h2 class="title">WIP</h2>
-										´
-										<!--payment method-->
-
 										<div class="buttons">
 											<button
 												class="button is-primary is-large"
@@ -230,7 +434,7 @@
 										</div>
 									</form>
 								</article>
-								<article class="tile is-child notification is-warning">
+								<article class="tile is-child notification">
 									<p class="title">...tiles</p>
 									<p class="subtitle">Bottom tile</p>
 								</article>
@@ -238,7 +442,7 @@
 						</div>
 					</div>
 					<div class="tile is-parent">
-						<article class="tile is-child notification is-success">
+						<article class="tile is-child notification is-dark">
 							<div class="content">
 								<p class="title">Resumo da compra</p>
 								<hr />

@@ -1,5 +1,5 @@
-import { planBuyer } from './fakeClients.js';
-import { paymentBody, createPlanBody } from './paymentBodies.js';
+import { createPlanBody } from './paymentBodies.js';
+import { checkEmptyInputs } from './utils.js';
 import { XmlBodyBuilder } from './xmlBuilder.js';
 
 const domParser = new DOMParser();
@@ -62,7 +62,25 @@ document.getElementById('generateHash').addEventListener('click', () => {
 });
 
 document.getElementById('sendCheckout').addEventListener('click', () => {
-	paymentBody.payment.sender.hash = localStorage.getItem('senderHash');
+	const formData = Array.from(
+		document.forms['CheckoutForm'].getElementsByTagName('input')
+	);
+
+	if (checkEmptyInputs(formData)) return;
+
+	const sender = formData.slice(0, 13).map((input, i) => {
+		if (i <= 12) return input.value;
+
+		return;
+	});
+
+	const payment = formData.slice(13).map((input) => {
+		return input.value;
+	});
+
+	console.log(sender, payment);
+
+	/* 	paymentBody.payment.sender.hash = localStorage.getItem('senderHash');
 	paymentBody.payment.creditCard.token = localStorage.getItem('cardToken');
 
 	const paymentXmlBody = xmlBodyParser(paymentBody);
@@ -81,10 +99,10 @@ document.getElementById('sendCheckout').addEventListener('click', () => {
 			localStorage.removeItem('cardToken');
 			localStorage.removeItem('senderHash');
 		})
-		.catch((err) => console.log(err));
+		.catch((err) => console.log(err)); */
 });
 
-document.getElementById('createPlan').addEventListener('click', async () => {
+/* document.getElementById('createPlan').addEventListener('click', async () => {
 	const planXmlBody = xmlBodyParser(createPlanBody());
 
 	console.log(domParser.parseFromString(planXmlBody, 'text/xml'));
@@ -162,3 +180,4 @@ document.getElementById('cancelSub').addEventListener('click', async () => {
 		console.log(err);
 	}
 });
+ */
