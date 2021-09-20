@@ -3,7 +3,6 @@
 	"version": "1.0.0",
 	"description": "",
 	"main": "paymentBodyBuilder.js",
-	"type": "module",
 	"scripts": {
 		"start": "nodemon main.js"
 	},
@@ -16,10 +15,17 @@
 		"cors": "^2.8.5",
 		"express": "^4.17.1",
 		"fast-xml-parser": "^3.19.0",
+		"js-brasil": "^2.4.9",
 		"js2xmlparser": "^4.0.1",
-		"nodemon": "^2.0.12"
+		"nodemon": "^2.0.12",
+		"pg": "^8.7.1",
+		"pg-hstore": "^2.3.4",
+		"sequelize": "^6.6.5"
 	},
 	"browserslist": [
 		"last 1 Chrome versions"
-	]
+	],
+	"devDependencies": {
+		"dotenv": "^10.0.0"
+	}
 }
