@@ -33,32 +33,9 @@
 							<div class="tile is-parent is-vertical" id="checkout-tile">
 								<article class="tile is-child notification">
 									<p class="title is-2">Checkout</p>
+									<br />
 
 									<form method="POST" id="CheckoutForm">
-										<div class="columns">
-											<div class="field column is-two-thirds">
-												<p class="control">
-													<input
-														readonly
-														class="input is-link"
-														type="text"
-														placeholder="Sender Hash"
-														id="senderHash"
-													/>
-												</p>
-											</div>
-
-											<div class="buttons column">
-												<button
-													class="button is-link is-light"
-													type="button"
-													id="generateHash"
-												>
-													Gerar Hash
-												</button>
-											</div>
-										</div>
-
 										<h2 class="subtitle is-4">Dados pessoais</h2>
 										<div class="columns">
 											<div class="field column is-half">
@@ -68,6 +45,7 @@
 														class="input"
 														type="email"
 														placeholder="Email"
+														id="senderMail"
 													/>
 													<span class="icon is-small is-left">
 														<i class="fas fa-envelope"></i>
@@ -81,6 +59,7 @@
 														class="input"
 														type="text"
 														placeholder="Nome"
+														id="senderName"
 													/>
 													<span class="icon is-small is-left">
 														<i class="fas fa-user"></i>
@@ -120,6 +99,7 @@
 														class="input"
 														type="text"
 														placeholder="CPF"
+														id="senderCpf"
 													/>
 													<span class="icon is-small is-left">
 														<i class="fas fa-id-card"></i>
@@ -156,8 +136,7 @@
 											<div class="field column">
 												<p class="control">
 													<input
-														id="senderComplement"
-														class="input"
+														class="input addressComplement"
 														type="text"
 														placeholder="Complemento"
 													/>
@@ -173,6 +152,7 @@
 														class="input"
 														type="text"
 														placeholder="CEP"
+														id="senderCep"
 													/>
 												</p>
 											</div>
@@ -209,63 +189,76 @@
 										</div>
 
 										<br />
-										<h2 class="subtitle is-4">Dados de pagamento</h2>
-										<div class="columns">
-											<div class="field column is-one-quarter">
-												<p class="control has-icons-left">
-													<input
-														required
-														class="input"
-														type="text"
-														placeholder="Nº cartão"
-													/>
-													<span class="icon is-small is-left">
-														<i class="fas fa-credit-card"></i>
-													</span>
-												</p>
+										<div id="CreditCardData">
+											<h2 class="subtitle is-4">Dados de pagamento</h2>
+											<div class="columns">
+												<div class="field column is-one-third">
+													<p class="control has-icons-left">
+														<input
+															required
+															class="input"
+															type="text"
+															placeholder="Nº cartão"
+														/>
+														<span class="icon is-small is-left">
+															<i class="fas fa-credit-card"></i>
+														</span>
+													</p>
+												</div>
+												<div class="field column is-one-quarter">
+													<p class="control">
+														<input
+															required
+															class="input"
+															type="text"
+															placeholder="Bandeira"
+														/>
+													</p>
+												</div>
+												<div class="field column is-one-sixth">
+													<p class="control">
+														<input
+															required
+															class="input"
+															type="text"
+															placeholder="CVV"
+														/>
+													</p>
+												</div>
+												<div class="field column">
+													<p class="control">
+														<input
+															required
+															class="input"
+															type="text"
+															placeholder="Mês exp"
+														/>
+													</p>
+												</div>
+												<div class="field column">
+													<p class="control">
+														<input
+															required
+															class="input"
+															type="text"
+															placeholder="Ano exp"
+														/>
+													</p>
+												</div>
 											</div>
-											<div class="field column">
-												<p class="control">
-													<input
-														required
-														class="input"
-														type="text"
-														placeholder="Bandeira"
-													/>
-												</p>
-											</div>
-											<div class="field column is-one-fifth">
-												<p class="control">
-													<input
-														required
-														class="input"
-														type="text"
-														placeholder="CVV"
-													/>
-												</p>
-											</div>
-											<div class="field column is-one-fifth">
-												<p class="control">
-													<input
-														required
-														class="input"
-														type="text"
-														placeholder="Mês exp"
-													/>
-												</p>
-											</div>
-											<div class="field column is-one-fifth">
-												<p class="control">
-													<input
-														required
-														class="input"
-														type="text"
-														placeholder="Ano exp"
-													/>
-												</p>
+											<div class="buttons">
+												<button
+													class="button is-info"
+													type="button"
+													id="confirmCard"
+												>
+													Validar cartão de crédito
+												</button>
 											</div>
 										</div>
 
+										<br />
+										<h2 class="subtitle is-4">Dados de faturamento</h2>
 										<div class="columns">
 											<div class="field column is-half">
 												<p class="control has-icons-left has-icons-right">
@@ -299,6 +292,7 @@
 														class="input"
 														type="text"
 														placeholder="CPF"
+														id="paymentCpf"
 													/>
 													<small>*Apenas números</small>
 												</p>
@@ -330,16 +324,14 @@
 												</p>
 											</div>
 											<div class="field column">
-												<p class="control has-icons-left">
+												<p class="control">
 													<input
 														required
 														class="input"
 														type="text"
-														placeholder="CPF"
+														placeholder="CEP"
+														id="paymentCep"
 													/>
-													<span class="icon is-small is-left">
-														<i class="fas fa-id-card"></i>
-													</span>
 												</p>
 											</div>
 										</div>
@@ -371,8 +363,7 @@
 											<div class="field column">
 												<p class="control">
 													<input
-														id="paymentComplement"
-														class="input"
+														class="input addressComplement"
 														type="text"
 														placeholder="Complemento"
 													/>
@@ -381,16 +372,6 @@
 										</div>
 
 										<div class="columns">
-											<div class="field column is-one-quarter">
-												<p class="control has-icons-left">
-													<input
-														required
-														class="input"
-														type="text"
-														placeholder="CEP"
-													/>
-												</p>
-											</div>
 											<div class="field column">
 												<p class="control has-icons-left has-icons-right">
 													<input
@@ -427,16 +408,12 @@
 											<button
 												class="button is-primary is-large"
 												type="button"
-												id="sendCheckout"
+												id="paySub"
 											>
 												Enviar
 											</button>
 										</div>
 									</form>
-								</article>
-								<article class="tile is-child notification">
-									<p class="title">...tiles</p>
-									<p class="subtitle">Bottom tile</p>
 								</article>
 							</div>
 						</div>
@@ -454,7 +431,7 @@
 									</p>
 									<div class="columns">
 										<h2 class="title column is-half">Valor:</h2>
-										<h4 class="title column">R$ 150,00</h4>
+										<h4 class="title column">R$ 350,00</h4>
 									</div>
 								</div>
 							</div>
@@ -464,6 +441,7 @@
 			</div>
 		</section>
 
+		<script src="./js-brasil.js"></script>
 		<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 		<script
 			type="text/javascript"
@@ -476,6 +454,7 @@
 			referrerpolicy="no-referrer"
 		></script>
 		<script src="./index.js" type="module"></script>
+		<script src="./validations.js" type="module"></script>
 		<script src="./paymentBodies.js" type="module"></script>
 	</body>
 </html>

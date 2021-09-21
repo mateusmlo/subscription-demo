@@ -25,5 +25,9 @@ exports.default = db.define('sender', {
 		type: Sequelize.STRING,
 		allowNull: true,
 		unique: true
+	},
+	subscriptionStatus: {
+		type: Sequelize.BOOLEAN,
+		allowNull: true
 	}
 });

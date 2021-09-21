@@ -1,4 +1,3 @@
-import { createPlanBody } from './paymentBodies.js';
 import { checkEmptyInputs } from './utils.js';
 import { XmlBodyBuilder } from './xmlBuilder.js';
 
@@ -29,80 +28,19 @@ window.addEventListener('DOMContentLoaded', async () => {
 		}
 	});
 
-	PagSeguroDirectPayment.createCardToken({
-		cardNumber: '4111111111111111', // Número do cartão de crédito
-		brand: 'visa', // Bandeira do cartão
-		cvv: '123', // CVV do cartão
-		expirationMonth: '12', // Mês da expiração do cartão
-		expirationYear: '2030', // Ano da expiração do cartão, é necessário os 4 dígitos.
-		success: (res) => {
-			console.log(res);
-			localStorage.cardToken = res.card.token;
-		},
-		error: (res) => {
-			console.log(res);
-		},
-		complete: (res) => {
-			console.log('Token criado com sucesso');
-		}
-	});
-});
+	document.getElementById('senderName').addEventListener('blur', () => {
+		PagSeguroDirectPayment.onSenderHashReady((res) => {
+			if (res.status == 'error') {
+				console.log(res.message);
+				return false;
+			}
 
-document.getElementById('generateHash').addEventListener('click', () => {
-	PagSeguroDirectPayment.onSenderHashReady((res) => {
-		if (res.status == 'error') {
-			console.log(res.message);
-			return false;
-		}
-
-		localStorage.senderHash = res.senderHash;
-		document.getElementById('senderHash').value = res.senderHash;
-		console.log('Sender hash gerado!');
-	});
-});
-
-document.getElementById('sendCheckout').addEventListener('click', () => {
-	const formData = Array.from(
-		document.forms['CheckoutForm'].getElementsByTagName('input')
-	);
-
-	if (checkEmptyInputs(formData)) return;
-
-	const sender = formData.slice(0, 13).map((input, i) => {
-		if (i <= 12) return input.value;
-
-		return;
+			localStorage.senderHash = res.senderHash;
+			console.log('Sender hash gerado!');
+		});
 	});
 
-	const payment = formData.slice(13).map((input) => {
-		return input.value;
-	});
-
-	console.log(sender, payment);
-
-	/* 	paymentBody.payment.sender.hash = localStorage.getItem('senderHash');
-	paymentBody.payment.creditCard.token = localStorage.getItem('cardToken');
-
-	const paymentXmlBody = xmlBodyParser(paymentBody);
-
-	console.log(domParser.parseFromString(paymentXmlBody, 'text/xml'));
-
-	axios
-		.request({
-			url: `http://localhost:3000/transactions`,
-			method: 'post',
-			data: { paymentXmlBody: paymentXmlBody }
-		})
-		.then(({ data }) => {
-			console.log(data);
-
-			localStorage.removeItem('cardToken');
-			localStorage.removeItem('senderHash');
-		})
-		.catch((err) => console.log(err)); */
-});
-
-/* document.getElementById('createPlan').addEventListener('click', async () => {
+	/* document.getElementById('createPlan').addEventListener('click', async () => {
 	const planXmlBody = xmlBodyParser(createPlanBody());
 
 	console.log(domParser.parseFromString(planXmlBody, 'text/xml'));
@@ -120,7 +58,65 @@ document.getElementById('sendCheckout').addEventListener('click', () => {
 	}
 });
 
-document.getElementById('paySub').addEventListener('click', async () => {
+*/
+
+	//TODO dá pra melhorar. Tem uma função que descobre a bandeira após 5 numeros. Fazer a validação sem precisar da interação do user pra isso
+	document.getElementById('confirmCard').addEventListener('click', () => {
+		const creditCardData = Array.from(
+			document.getElementById('CreditCardData').querySelectorAll('[required]')
+		);
+
+		if (checkEmptyInputs(creditCardData)) return;
+
+		PagSeguroDirectPayment.createCardToken({
+			cardNumber: creditCardData[0].value, // Número do cartão de crédito
+			brand: creditCardData[1].value, // Bandeira do cartão
+			cvv: creditCardData[2].value, // CVV do cartão
+			expirationMonth: creditCardData[3].value, // Mês da expiração do cartão
+			expirationYear: creditCardData[4].value, // Ano da expiração do cartão, é necessário os 4 dígitos.
+			success: (res) => {
+				console.log(res);
+				localStorage.cardToken = res.card.token;
+			},
+			error: (res) => {
+				console.log(res);
+			},
+			complete: (res) => {
+				console.log('Token criado com sucesso');
+			}
+		});
+	});
+
+	document.getElementById('paySub').addEventListener('click', async () => {
+		const formData = Array.from(
+			document.forms['CheckoutForm'].querySelectorAll('[required]')
+		);
+
+		const complements = Array.from(
+			document.querySelectorAll('.addressComplement')
+		).map((input) => (input.value === '' ? (input.value = '-') : null));
+
+		if (checkEmptyInputs(formData)) return;
+
+		const sender = formData.slice(0, 13).map((input, i) => {
+			if (i <= 12) return input.value;
+
+			return;
+		});
+
+		const payment = formData.slice(13).map((input) => {
+			return input.value;
+		});
+
+		console.log(sender, payment);
+
+		const senderHash = localStorage.getItem('senderHash');
+	});
+	/* 
+	const paymentXmlBody = xmlBodyParser(paymentBody);
+
+	console.log(domParser.parseFromString(paymentXmlBody, 'text/xml'));
+
 	try {
 		const { data } = await axios.request({
 			url: 'http://localhost:3000/subscribe',
@@ -131,8 +127,10 @@ document.getElementById('paySub').addEventListener('click', async () => {
 		console.log(data);
 	} catch (err) {
 		console.log(err);
-	}
+	} */
 });
+
+/*
 
 // valor obtido como resultado do request acima, caso cancele uma sub terá que gerar outra
 const subCode = '69566C53E7E78A1334A6FFB2EA060915';

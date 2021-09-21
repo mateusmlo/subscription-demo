@@ -6,7 +6,8 @@ const createSubscription = async (req, res) => {
 		cpf: req.body.cpf,
 		email: req.body.email,
 		cardToken: req.body.cardToken,
-		subscription: req.body.subscription
+		subscription: req.body.subscription,
+		subscriptionStatus: req.body.subscriptionStatus
 	};
 
 	try {
