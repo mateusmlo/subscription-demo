@@ -1,14 +1,19 @@
 const { default: SenderRepository } = require('../models/sender.model');
+const xmlParser = require('fast-xml-parser');
 
+//TODO ajustar requisição que será enviada ao pagseg. XML está sendo gerado bugado, probs um problema no arquivo utils.js ao separar o array dos valores do form. Tá quase lá.
 const createSubscription = async (req, res) => {
-	const sender = {
+	const jsonSender = xmlParser.parse(req.body.buyPlanBody);
+	console.log(jsonSender);
+
+	/* 	const sender = {
 		name: req.body.name,
 		cpf: req.body.cpf,
 		email: req.body.email,
 		cardToken: req.body.cardToken,
 		subscription: req.body.subscription,
 		subscriptionStatus: req.body.subscriptionStatus
-	};
+	}; */
 
 	try {
 		const createSender = await SenderRepository.create(sender);

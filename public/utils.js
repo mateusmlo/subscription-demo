@@ -33,6 +33,8 @@ export const checkEmptyInputs = (formData) => {
 };
 
 export const buildPaymentBody = (complements, ...inputData) => {
+	console.log(inputData);
+
 	return {
 		plan: '94FE62572C2C682334694F9FE8F5300F',
 		reference: `test${Math.random()}`,
@@ -48,16 +50,16 @@ export const buildPaymentBody = (complements, ...inputData) => {
 				street: inputData[5],
 				number: inputData[6],
 				complement: complements[0],
-				district: 'It',
-				city: 'Sao Paulo',
-				state: 'SP',
+				district: inputData[8],
+				city: inputData[9],
+				state: inputData[10],
 				country: 'BRA',
-				postalCode: '06240300'
+				postalCode: inputData[7]
 			},
 			documents: [
 				{
 					type: 'CPF',
-					value: '00000000000'
+					value: inputData[4]
 				}
 			]
 		},
@@ -66,27 +68,27 @@ export const buildPaymentBody = (complements, ...inputData) => {
 			creditCard: {
 				token: localStorage.getItem('cardToken'),
 				holder: {
-					name: 'teste Teste',
-					birthDate: '04/12/1991',
+					name: inputData[16],
+					birthDate: inputData[17],
 					documents: [
 						{
 							type: 'CPF',
-							value: '87770392543'
+							value: inputData[18]
 						}
 					],
 					phone: {
-						areaCode: '11',
-						number: '20516250'
+						areaCode: inputData[19],
+						number: inputData[20]
 					},
 					billingAddress: {
-						street: 'Vila Lygia Fagundes Teles',
-						number: '125',
-						complement: '',
-						district: 'Jurunas',
-						city: 'Belém',
-						state: 'PA',
+						street: inputData[22],
+						number: inputData[23],
+						complement: complements[1],
+						district: inputData[24],
+						city: inputData[25],
+						state: inputData[26],
 						country: 'BRA',
-						postalCode: '66030402'
+						postalCode: inputData[21]
 					}
 				}
 			}

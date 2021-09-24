@@ -86,10 +86,12 @@
 														class="input"
 														type="tel"
 														placeholder="Telefone"
+														maxlength="9"
 													/>
 													<span class="icon is-small is-left">
 														<i class="fas fa-phone"></i>
 													</span>
+													<small>*Apenas números</small>
 												</p>
 											</div>
 											<div class="field column">
@@ -100,6 +102,7 @@
 														type="text"
 														placeholder="CPF"
 														id="senderCpf"
+														maxlength="11"
 													/>
 													<span class="icon is-small is-left">
 														<i class="fas fa-id-card"></i>
@@ -153,6 +156,7 @@
 														type="text"
 														placeholder="CEP"
 														id="senderCep"
+														maxlength="9"
 													/>
 												</p>
 											</div>
@@ -199,6 +203,8 @@
 															class="input"
 															type="text"
 															placeholder="Nº cartão"
+															id="creditCardNumber"
+															maxlength="16"
 														/>
 														<span class="icon is-small is-left">
 															<i class="fas fa-credit-card"></i>
@@ -209,9 +215,11 @@
 													<p class="control">
 														<input
 															required
+															readonly
 															class="input"
 															type="text"
 															placeholder="Bandeira"
+															id="cardBrand"
 														/>
 													</p>
 												</div>
@@ -222,6 +230,7 @@
 															class="input"
 															type="text"
 															placeholder="CVV"
+															maxlength="3"
 														/>
 													</p>
 												</div>
@@ -232,6 +241,7 @@
 															class="input"
 															type="text"
 															placeholder="Mês exp"
+															maxlength="2"
 														/>
 													</p>
 												</div>
@@ -242,6 +252,7 @@
 															class="input"
 															type="text"
 															placeholder="Ano exp"
+															maxlength="4"
 														/>
 													</p>
 												</div>
@@ -293,6 +304,7 @@
 														type="text"
 														placeholder="CPF"
 														id="paymentCpf"
+														maxlength="11"
 													/>
 													<small>*Apenas números</small>
 												</p>
@@ -307,6 +319,7 @@
 														class="input"
 														type="text"
 														placeholder="DDD"
+														maxlength="3"
 													/>
 												</p>
 											</div>
@@ -317,6 +330,7 @@
 														class="input"
 														type="tel"
 														placeholder="Telefone"
+														maxlength="9"
 													/>
 													<span class="icon is-small is-left">
 														<i class="fas fa-phone"></i>
@@ -331,6 +345,7 @@
 														type="text"
 														placeholder="CEP"
 														id="paymentCep"
+														maxlength="11"
 													/>
 												</p>
 											</div>

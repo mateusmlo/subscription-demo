@@ -1,4 +1,4 @@
-import { checkEmptyInputs } from './utils.js';
+import { buildPaymentBody, checkEmptyInputs } from './utils.js';
 import { XmlBodyBuilder } from './xmlBuilder.js';
 
 const domParser = new DOMParser();
@@ -14,19 +14,6 @@ window.addEventListener('DOMContentLoaded', async () => {
 
 	PagSeguroDirectPayment.setSessionId(sessionId);
 	console.log('SESSION ID:    ', sessionId);
-
-	PagSeguroDirectPayment.getBrand({
-		cardBin: 411111,
-		success: function (response) {
-			console.log(response);
-		},
-		error: function (response) {
-			console.log(response);
-		},
-		complete: function (response) {
-			//tratamento comum para todas chamadas
-		}
-	});
 
 	document.getElementById('senderName').addEventListener('blur', () => {
 		PagSeguroDirectPayment.onSenderHashReady((res) => {
@@ -60,7 +47,28 @@ window.addEventListener('DOMContentLoaded', async () => {
 
 */
 
-	//TODO dá pra melhorar. Tem uma função que descobre a bandeira após 5 numeros. Fazer a validação sem precisar da interação do user pra isso
+	document.getElementById('creditCardNumber').addEventListener('input', (e) => {
+		if (e.target.value.length === 6) {
+			PagSeguroDirectPayment.getBrand({
+				cardBin: e.target.value,
+				success: function ({ brand }) {
+					console.log(brand);
+					e.target.classList.remove('is-danger');
+					document.getElementById('cardBrand').value = brand.name;
+				},
+				error: function (err) {
+					invalidCreditCard('Cartão de crédito inválido.');
+					e.target.classList.add('is-danger');
+					console.log(err);
+				},
+				complete: function (res) {
+					console.log(res);
+				}
+			});
+		}
+	});
+
+	//TODO dá pra melhorar -> Fazer a validação sem precisar da interação do user pra isso
 	document.getElementById('confirmCard').addEventListener('click', () => {
 		const creditCardData = Array.from(
 			document.getElementById('CreditCardData').querySelectorAll('[required]')
@@ -75,15 +83,13 @@ window.addEventListener('DOMContentLoaded', async () => {
 			expirationMonth: creditCardData[3].value, // Mês da expiração do cartão
 			expirationYear: creditCardData[4].value, // Ano da expiração do cartão, é necessário os 4 dígitos.
 			success: (res) => {
-				console.log(res);
+				console.log('Token criado com sucesso', res);
 				localStorage.cardToken = res.card.token;
 			},
-			error: (res) => {
-				console.log(res);
+			error: (err) => {
+				console.log(err);
 			},
-			complete: (res) => {
-				console.log('Token criado com sucesso');
-			}
+			complete: (res) => {}
 		});
 	});
 
@@ -94,7 +100,7 @@ window.addEventListener('DOMContentLoaded', async () => {
 
 		const complements = Array.from(
 			document.querySelectorAll('.addressComplement')
-		).map((input) => (input.value === '' ? (input.value = '-') : null));
+		).map((input) => (input.value === '' ? (input.value = '-') : input.value));
 
 		if (checkEmptyInputs(formData)) return;
 
@@ -108,26 +114,25 @@ window.addEventListener('DOMContentLoaded', async () => {
 			return input.value;
 		});
 
-		console.log(sender, payment);
+		const paymentBody = buildPaymentBody(complements, sender, payment);
+		const paymentXmlBody = xmlBodyParser(paymentBody);
 
-		const senderHash = localStorage.getItem('senderHash');
+		console.log(domParser.parseFromString(paymentXmlBody, 'text/xml'));
+		console.log(sender, complements, payment);
+		console.log(paymentXmlBody);
+
+		try {
+			const { data } = await axios.request({
+				url: 'http://localhost:3000/subscribe',
+				method: 'post',
+				data: { buyPlanBody: paymentXmlBody }
+			});
+
+			console.log(data);
+		} catch (err) {
+			console.log(err);
+		}
 	});
-	/* 
-	const paymentXmlBody = xmlBodyParser(paymentBody);
-
-	console.log(domParser.parseFromString(paymentXmlBody, 'text/xml'));
-
-	try {
-		const { data } = await axios.request({
-			url: 'http://localhost:3000/subscribe',
-			method: 'post',
-			data: { buyPlanBody: planBuyer }
-		});
-
-		console.log(data);
-	} catch (err) {
-		console.log(err);
-	} */
 });
 
 /*

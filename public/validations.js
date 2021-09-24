@@ -52,8 +52,29 @@ const addValidationEvent = (element, dataTypeToValidate, errorMessage) => {
 	});
 };
 
+const invalidCreditCard = (errorMessage) => {
+	const errorElement = `<article id="errorForm" class="message is-danger">
+                          <div class="message-header">
+                            <p>Erro</p>
+                          </div>
+                          <div class="message-body">
+                          ${errorMessage}
+                          </div>
+                        </article>`;
+
+	window.scrollTo({ top: 110, behavior: 'smooth' });
+
+	document
+		.getElementById('checkout-tile')
+		.insertAdjacentHTML('afterbegin', errorElement);
+
+	setTimeout(() => {
+		document.getElementById('errorForm').remove();
+	}, 3500);
+};
+
 addValidationEvent('senderMail', 'email', 'Endereço de email inválido');
 addValidationEvent('senderCpf', 'cpf', 'Numero do CPF inválido');
 addValidationEvent('senderCep', 'cep', 'Número do CEP inválido');
 addValidationEvent('paymentCpf', 'cpf', 'Número do CPF inválido');
-addValidationEvent('paymentCep', 'cep', 'Número do CEP inválid.');
+addValidationEvent('paymentCep', 'cep', 'Número do CEP inválido.');
