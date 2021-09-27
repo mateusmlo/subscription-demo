@@ -32,8 +32,8 @@ export const checkEmptyInputs = (formData) => {
 	return false;
 };
 
-export const buildPaymentBody = (complements, ...inputData) => {
-	console.log(inputData);
+export const buildPaymentBody = (complements, inputData) => {
+	console.log(complements, inputData);
 
 	return {
 		plan: '94FE62572C2C682334694F9FE8F5300F',

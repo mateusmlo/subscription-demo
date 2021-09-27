@@ -52,6 +52,7 @@ const addValidationEvent = (element, dataTypeToValidate, errorMessage) => {
 	});
 };
 
+//! verificar por que não está funcionando
 const invalidCreditCard = (errorMessage) => {
 	const errorElement = `<article id="errorForm" class="message is-danger">
                           <div class="message-header">

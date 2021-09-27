@@ -114,21 +114,16 @@ window.addEventListener('DOMContentLoaded', async () => {
 			return input.value;
 		});
 
-		const paymentBody = buildPaymentBody(complements, sender, payment);
-		const paymentXmlBody = xmlBodyParser(paymentBody);
-
-		console.log(domParser.parseFromString(paymentXmlBody, 'text/xml'));
-		console.log(sender, complements, payment);
-		console.log(paymentXmlBody);
+		const paymentBody = buildPaymentBody(complements, [...sender, ...payment]);
 
 		try {
 			const { data } = await axios.request({
 				url: 'http://localhost:3000/subscribe',
 				method: 'post',
-				data: { buyPlanBody: paymentXmlBody }
+				data: { subscriptionBody: paymentBody }
 			});
 
-			console.log(data);
+			console.log('[index.js]', data);
 		} catch (err) {
 			console.log(err);
 		}

@@ -1,24 +1,39 @@
-const { default: SenderRepository } = require('../models/sender.model');
-const xmlParser = require('fast-xml-parser');
+const { default: SenderRepository } = require('../models/sender.model'),
+	axios = require('axios');
 
-//TODO ajustar requisição que será enviada ao pagseg. XML está sendo gerado bugado, probs um problema no arquivo utils.js ao separar o array dos valores do form. Tá quase lá.
+const email = process.env.PAGSEG_EMAIL;
+const token = process.env.PAGSEG_TOKEN;
+
 const createSubscription = async (req, res) => {
-	const jsonSender = xmlParser.parse(req.body.buyPlanBody);
-	console.log(jsonSender);
+	const subscriber = req.body.subscriptionBody;
 
-	/* 	const sender = {
-		name: req.body.name,
-		cpf: req.body.cpf,
-		email: req.body.email,
-		cardToken: req.body.cardToken,
-		subscription: req.body.subscription,
-		subscriptionStatus: req.body.subscriptionStatus
-	}; */
+	const newSubscriber = {
+		name: subscriber.sender.name,
+		cpf: subscriber.sender.documents[0].value,
+		email: subscriber.sender.email,
+		cardToken: subscriber.paymentMethod.creditCard.token,
+		subscription: subscriber.reference,
+		subscriptionStatus: true
+	};
 
 	try {
-		const createSender = await SenderRepository.create(sender);
+		const createSubscriber = await SenderRepository.create(newSubscriber);
 
-		res.json(createSender);
+		await axios.request({
+			method: 'post',
+			url: `https://ws.sandbox.pagseguro.uol.com.br/pre-approvals?email=${email}&token=${token}`,
+			headers: {
+				Accept: 'application/vnd.pagseguro.com.br.v3+xml;charset=ISO-8859-1',
+				'Content-Type': 'application/json'
+			},
+			data: subscriber
+		});
+
+		console.log('plano assinado: \n', createSubscriber);
+
+		res.status(200).json({
+			message: 'Assinatura do plano efetuada.'
+		});
 	} catch (err) {
 		res.status(500).json({ message: err.message });
 	}
@@ -36,21 +51,7 @@ module.exports = { createSubscription };
 
 /* async (req, res, next) => {
 	try {
-		const { buyPlanBody } = req.body;
-
-				await axios.request({
-			method: 'post',
-			url: `https://ws.sandbox.pagseguro.uol.com.br/pre-approvals?email=${email}&token=${token}`,
-			headers: {
-				Accept: 'application/vnd.pagseguro.com.br.v3+xml;charset=ISO-8859-1',
-				'Content-Type': 'application/json'
-			},
-			data: buyPlanBody
-		});
-
-		console.log('plano assinado');
-
-		res.status(200).json({ message: 'Assinatura do plano efetuada.' });
+		
 	} catch (err) {
 		console.log('ERRO', err);
 		res.status(500).json(err);

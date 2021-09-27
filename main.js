@@ -3,8 +3,6 @@ require('dotenv').config();
 const { default: routes } = require('./routes');
 const { default: db } = require('./config/db');
 
-require('dotenv').config();
-
 const express = require('express'),
 	cors = require('cors'),
 	{ json, urlencoded, static: expressStatic } = express;
