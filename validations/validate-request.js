@@ -10,7 +10,12 @@ module.exports = ({ body }, res, next) => {
 	const isEmailValid = validateBr.email(body.subscriptionBody.sender.email);
 
 	if (!isCpfValid || !isCepValid || !isEmailValid)
-		return res.status(400).json('Invalid document');
+		return res
+			.status(400)
+			.json({
+				errorType: 'INVALID_VALUE',
+				message: 'Valor inválido recebido. Verifique as informações enviadas.'
+			});
 
 	console.log('Dados válidos.');
 	next();

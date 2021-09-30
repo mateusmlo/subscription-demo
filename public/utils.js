@@ -69,7 +69,7 @@ export const buildPaymentBody = (complements, inputData) => {
 				token: localStorage.getItem('cardToken'),
 				holder: {
 					name: inputData[16],
-					birthDate: inputData[17],
+					birthDate: inputData[17].split('-').reverse().join('/'),
 					documents: [
 						{
 							type: 'CPF',

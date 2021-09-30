@@ -1,5 +1,6 @@
 const { default: SenderRepository } = require('../models/sender.model'),
-	axios = require('axios');
+	xmlParser = require('fast-xml-parser');
+axios = require('axios');
 
 const email = process.env.PAGSEG_EMAIL;
 const token = process.env.PAGSEG_TOKEN;
@@ -7,19 +8,17 @@ const token = process.env.PAGSEG_TOKEN;
 const createSubscription = async (req, res) => {
 	const subscriber = req.body.subscriptionBody;
 
-	const newSubscriber = {
+	let newSubscriber = {
 		name: subscriber.sender.name,
 		cpf: subscriber.sender.documents[0].value,
 		email: subscriber.sender.email,
 		cardToken: subscriber.paymentMethod.creditCard.token,
-		subscription: subscriber.reference,
+		subscription: null,
 		subscriptionStatus: true
 	};
 
 	try {
-		const createSubscriber = await SenderRepository.create(newSubscriber);
-
-		await axios.request({
+		const { data } = await axios.request({
 			method: 'post',
 			url: `https://ws.sandbox.pagseguro.uol.com.br/pre-approvals?email=${email}&token=${token}`,
 			headers: {
@@ -29,25 +28,89 @@ const createSubscription = async (req, res) => {
 			data: subscriber
 		});
 
-		console.log('plano assinado: \n', createSubscriber);
+		// o request acima aceita json e retorna xml 🙄
+		const jsonResponse = xmlParser.parse(data);
 
-		res.status(200).json({
-			message: 'Assinatura do plano efetuada.'
+		newSubscriber.subscription = jsonResponse.directPreApproval.code;
+
+		await SenderRepository.create(newSubscriber);
+
+		res.json({
+			message: 'Assinatura do plano efetuada.',
+			subCode: jsonResponse.directPreApproval.code
 		});
 	} catch (err) {
 		res.status(500).json({ message: err.message });
 	}
 };
 
-const findOne = (req, res) => {};
+const suspendSubscription = async (req, res) => {
+	const subCode = req.body.subCode;
 
-const update = (req, res) => {};
+	if (!subCode) throw new Error('Nenhuma assinatura encontrada');
 
-const remove = (req, res) => {};
+	try {
+		await axios.request({
+			url: `https://ws.sandbox.pagseguro.uol.com.br/pre-approvals/${subCode}/status`,
+			params: {
+				email: email,
+				token: token
+			},
+			method: 'put',
+			headers: {
+				Accept: 'application/vnd.pagseguro.com.br.v3+xml;charset=ISO-8859-1',
+				'Content-Type': 'application/json'
+			},
+			data: {
+				status: 'SUSPENDED'
+			}
+		});
 
-const findAll = (req, res) => {};
+		console.log(data);
+		res.json({
+			message: 'Assinatura suspensa.'
+		});
+	} catch (err) {
+		res.status(500).json({ message: err.message });
+	}
+};
 
-module.exports = { createSubscription };
+const resumeSubscription = async (req, res) => {
+	const subCode = req.body.subCode;
+
+	if (!subCode) throw new Error('Nenhuma assinatura encontrada');
+
+	try {
+		await axios.request({
+			url: `https://ws.sandbox.pagseguro.uol.com.br/pre-approvals/${subCode}/status`,
+			params: {
+				email: email,
+				token: token
+			},
+			method: 'put',
+			headers: {
+				Accept: 'application/vnd.pagseguro.com.br.v3+xml;charset=ISO-8859-1',
+				'Content-Type': 'application/json'
+			},
+			data: {
+				suspendSub: { status: 'ACTIVE' }
+			}
+		});
+
+		console.log(data);
+		res.json({
+			message: 'Assinatura suspensa.'
+		});
+	} catch (err) {
+		res.status(500).json({ message: err.message });
+	}
+};
+
+module.exports = {
+	createSubscription,
+	suspendSubscription,
+	resumeSubscription
+};
 
 /* async (req, res, next) => {
 	try {

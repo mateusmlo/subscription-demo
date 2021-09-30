@@ -123,7 +123,8 @@ window.addEventListener('DOMContentLoaded', async () => {
 				data: { subscriptionBody: paymentBody }
 			});
 
-			console.log('[index.js]', data);
+			console.log(data);
+			localStorage.subCode = data.subCode;
 		} catch (err) {
 			console.log(err);
 		}
@@ -131,24 +132,6 @@ window.addEventListener('DOMContentLoaded', async () => {
 });
 
 /*
-
-// valor obtido como resultado do request acima, caso cancele uma sub terá que gerar outra
-const subCode = '69566C53E7E78A1334A6FFB2EA060915';
-
-document.getElementById('suspendSub').addEventListener('click', async () => {
-	try {
-		await axios.request({
-			url: 'http://localhost:3000/suspend-sub',
-			method: 'post',
-			data: {
-				suspendSub: { status: 'SUSPENDED' },
-				subCode: subCode
-			}
-		});
-	} catch (err) {
-		console.log(err);
-	}
-});
 
 document.getElementById('reactivateSub').addEventListener('click', async () => {
 	try {

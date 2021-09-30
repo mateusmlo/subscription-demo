@@ -19,7 +19,39 @@
 		/>
 	</head>
 
-	<body>
+	<body class="has-navbar-fixed-top">
+		<nav class="navbar is-transparent is-fixed-top">
+			<div class="navbar-brand">
+				<a class="navbar-item" href="https://bulma.io">
+					<img
+						src="https://bulma.io/images/bulma-logo.png"
+						alt="Bulma: a modern CSS framework based on Flexbox"
+						width="112"
+						height="28"
+					/>
+				</a>
+				<div
+					class="navbar-burger"
+					data-target="navbarExampleTransparentExample"
+				>
+					<span></span>
+					<span></span>
+					<span></span>
+				</div>
+			</div>
+
+			<div id="navbarExampleTransparentExample" class="navbar-menu">
+				<div class="navbar-start">
+					<a class="navbar-item" href=""> Home </a>
+					<div class="navbar-item">
+						<a class="navbar-link" href="gerenciar-assinatura.html">
+							Gerenciar Assinatura
+						</a>
+						<a class="navbar-link" href="#"> Histórico (WIP) </a>
+					</div>
+				</div>
+			</div>
+		</nav>
 		<section class="section">
 			<div class="container">
 				<h1 class="title">Assinatura Plano</h1>
@@ -290,10 +322,9 @@
 													<input
 														required
 														class="input"
-														type="text"
+														type="date"
 														placeholder="Data de nasc."
 													/>
-													<small>*No formato DD/MM/AAAA</small>
 												</p>
 											</div>
 											<div class="field column">
@@ -470,6 +501,5 @@
 		></script>
 		<script src="./index.js" type="module"></script>
 		<script src="./validations.js" type="module"></script>
-		<script src="./paymentBodies.js" type="module"></script>
 	</body>
 </html>
