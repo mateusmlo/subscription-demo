@@ -16,9 +16,7 @@ app.use(expressStatic('public'));
 
 app.use(routes);
 
-db.sync({ force: true }).then(() =>
-	console.log('✅ Succesfully connected to the database')
-);
+db.sync().then(() => console.log('✅ Succesfully connected to the database'));
 
 app.listen(3000, () => {
 	console.log('⚡ App is listening @ http://localhost:3000');

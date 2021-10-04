@@ -50,7 +50,14 @@ const suspendSubscription = async (req, res) => {
 	if (!subCode) throw new Error('Nenhuma assinatura encontrada');
 
 	try {
-		await axios.request({
+		const [sender] = await SenderRepository.findAll({
+			where: { subscription: subCode }
+		});
+
+		if (sender.dataValues.subscriptionStatus === false)
+			throw new Error('Assinatura já está inativa.');
+
+		const { data } = await axios.request({
 			url: `https://ws.sandbox.pagseguro.uol.com.br/pre-approvals/${subCode}/status`,
 			params: {
 				email: email,
@@ -66,11 +73,19 @@ const suspendSubscription = async (req, res) => {
 			}
 		});
 
+		await SenderRepository.update(
+			{
+				subscriptionStatus: false
+			},
+			{ where: { subscription: subCode } }
+		);
+
 		console.log(data);
 		res.json({
 			message: 'Assinatura suspensa.'
 		});
 	} catch (err) {
+		console.log(err);
 		res.status(500).json({ message: err.message });
 	}
 };
@@ -81,7 +96,14 @@ const resumeSubscription = async (req, res) => {
 	if (!subCode) throw new Error('Nenhuma assinatura encontrada');
 
 	try {
-		await axios.request({
+		const [sender] = await SenderRepository.findAll({
+			where: { subscription: subCode }
+		});
+
+		if (sender.dataValues.subscriptionStatus === true)
+			throw new Error('Assinatura já está ativa.');
+
+		const { data } = await axios.request({
 			url: `https://ws.sandbox.pagseguro.uol.com.br/pre-approvals/${subCode}/status`,
 			params: {
 				email: email,
@@ -93,15 +115,23 @@ const resumeSubscription = async (req, res) => {
 				'Content-Type': 'application/json'
 			},
 			data: {
-				suspendSub: { status: 'ACTIVE' }
+				status: 'ACTIVE'
 			}
 		});
 
+		await SenderRepository.update(
+			{
+				subscriptionStatus: true
+			},
+			{ where: { subscription: subCode } }
+		);
+
 		console.log(data);
 		res.json({
-			message: 'Assinatura suspensa.'
+			message: 'Assinatura reativada.'
 		});
 	} catch (err) {
+		console.log(err);
 		res.status(500).json({ message: err.message });
 	}
 };
