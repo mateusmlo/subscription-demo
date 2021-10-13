@@ -4,12 +4,15 @@
 		<meta charset="UTF-8" />
 		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
 		<link
 			rel="icon"
 			type="image/x-icon"
 			href="../images/pridebook-favicon.png"
 		/>
 		<title>Demo assinatura de serviço</title>
+
+		<script src="https://www.google.com/recaptcha/api.js"></script>
 		<script
 			defer
 			src="../../node_modules/@fortawesome/fontawesome-free/js/all.min.js"
@@ -461,9 +464,12 @@
 
 										<div class="buttons">
 											<button
-												class="button is-primary is-large"
+												class="button is-primary is-large g-recaptcha"
 												type="button"
 												id="paySub"
+												data-sitekey="6LfwtsocAAAAAM0mr0P6pvd7rXVTCPc9PO2XPWbs"
+												data-callback="onSubmit"
+												data-action="submit"
 											>
 												Enviar
 											</button>
@@ -495,6 +501,13 @@
 				</div>
 			</div>
 		</section>
+
+		<script>
+			function onSubmit(token, e) {
+				e.preventDefault();
+				document.getElementById('CheckoutForm').submit();
+			}
+		</script>
 
 		<script src="../js/js-brasil.js"></script>
 		<script src="https://unpkg.com/axios/dist/axios.min.js"></script>

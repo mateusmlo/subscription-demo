@@ -40,6 +40,7 @@ const createSubscription = async (req, res) => {
 			subCode: jsonResponse.directPreApproval.code
 		});
 	} catch (err) {
+		console.log(err);
 		res.status(500).json({ message: err.message });
 	}
 };
