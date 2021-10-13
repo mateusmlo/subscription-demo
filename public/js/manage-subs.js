@@ -1,7 +1,7 @@
 document.getElementById('suspendSub').addEventListener('click', async () => {
 	try {
 		const { data } = await axios.request({
-			url: 'http://localhost:3000/suspend-sub',
+			url: 'https://localhost:3000/suspend-sub',
 			method: 'post',
 			data: {
 				subCode: localStorage.getItem('subCode')
@@ -17,7 +17,7 @@ document.getElementById('suspendSub').addEventListener('click', async () => {
 document.getElementById('resumeSub').addEventListener('click', async () => {
 	try {
 		const { data } = await axios.request({
-			url: 'http://localhost:3000/resume-sub',
+			url: 'https://localhost:3000/resume-sub',
 			method: 'post',
 			data: {
 				subCode: localStorage.getItem('subCode')

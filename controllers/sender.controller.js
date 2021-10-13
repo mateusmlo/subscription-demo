@@ -136,17 +136,34 @@ const resumeSubscription = async (req, res) => {
 	}
 };
 
+const subscriptionsHistory = async (req, res) => {
+	const subCode = req.query.subCode;
+
+	if (!subCode) throw new Error('Nenhuma assinatura encontrada');
+
+	try {
+		const { data } = await axios.request({
+			url: `https://ws.sandbox.pagseguro.uol.com.br/pre-approvals/${subCode}/payment-orders`,
+			params: {
+				email: email,
+				token: token
+			},
+			method: 'get',
+			headers: {
+				Accept: 'application/vnd.pagseguro.com.br.v3+json;charset=ISO-8859-1'
+			}
+		});
+
+		res.json(data);
+	} catch (err) {
+		console.log(err);
+		res.status(500).json({ message: err.message });
+	}
+};
+
 module.exports = {
 	createSubscription,
 	suspendSubscription,
-	resumeSubscription
+	resumeSubscription,
+	subscriptionsHistory
 };
-
-/* async (req, res, next) => {
-	try {
-		
-	} catch (err) {
-		console.log('ERRO', err);
-		res.status(500).json(err);
-	}
-}; */

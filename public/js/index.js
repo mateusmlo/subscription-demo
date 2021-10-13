@@ -1,12 +1,8 @@
 import { buildPaymentBody, checkEmptyInputs } from './utils.js';
-import { XmlBodyBuilder } from './xmlBuilder.js';
-
-const domParser = new DOMParser();
-const xmlBodyParser = XmlBodyBuilder(parser);
 
 window.addEventListener('DOMContentLoaded', async () => {
 	const { data } = await axios.request({
-		url: `http://localhost:3000/get-session`,
+		url: `https://localhost:3000/get-session`,
 		method: 'post'
 	});
 
@@ -118,7 +114,7 @@ window.addEventListener('DOMContentLoaded', async () => {
 
 		try {
 			const { data } = await axios.request({
-				url: 'http://localhost:3000/subscribe',
+				url: 'https://localhost:3000/subscribe',
 				method: 'post',
 				data: { subscriptionBody: paymentBody }
 			});

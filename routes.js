@@ -4,7 +4,8 @@ const express = require('express'),
 	{
 		createSubscription,
 		suspendSubscription,
-		resumeSubscription
+		resumeSubscription,
+		subscriptionsHistory
 	} = require('./controllers/sender.controller'),
 	validateRequest = require('./validations/validate-request');
 
@@ -31,38 +32,14 @@ routes.post('/get-session', async (req, res) => {
 	}
 });
 
-routes.post('/create-plan', async (req, res, next) => {
-	try {
-		const { planBody } = req.body;
-
-		const config = {
-			method: 'post',
-			url: `https://ws.sandbox.pagseguro.uol.com.br/pre-approvals/request/?email=${email}&token=${token}`,
-			headers: {
-				Accept: 'application/vnd.pagseguro.com.br.v3+xml;charset=ISO-8859-1',
-				'Content-Type': 'application/xml;charset=ISO-8859-1'
-			},
-			data: planBody
-		};
-
-		const { data } = await axios(config);
-
-		console.log(JSON.stringify(data));
-
-		res.status(200).json(xmlParser.parse(data));
-	} catch (err) {
-		console.log('ERRO', err);
-		res.status(500).json(err);
-	}
-});
-
-//* esse endpoint do pagseg trabalha com JSON normalmente (por algum motivo)
 routes.post('/subscribe', validateRequest, createSubscription);
 
 //* endpoints para atualizar status da sub não retornam nada pelo pagseg
 routes.post('/suspend-sub', suspendSubscription);
 
 routes.post('/resume-sub', resumeSubscription);
+
+routes.get('/sub-history', subscriptionsHistory);
 
 /* routes.post('/cancel-sub', async (req, res, next) => {
 	try {
@@ -84,6 +61,31 @@ routes.post('/resume-sub', resumeSubscription);
 
 		console.log('assinatura cancelada');
 		res.status(200).json({ mensagem: 'F Assinatura' });
+	} catch (err) {
+		console.log('ERRO', err);
+		res.status(500).json(err);
+	}
+}); */
+
+/* routes.post('/create-plan', async (req, res, next) => {
+	try {
+		const { planBody } = req.body;
+
+		const config = {
+			method: 'post',
+			url: `https://ws.sandbox.pagseguro.uol.com.br/pre-approvals/request/?email=${email}&token=${token}`,
+			headers: {
+				Accept: 'application/vnd.pagseguro.com.br.v3+xml;charset=ISO-8859-1',
+				'Content-Type': 'application/xml;charset=ISO-8859-1'
+			},
+			data: planBody
+		};
+
+		const { data } = await axios(config);
+
+		console.log(JSON.stringify(data));
+
+		res.status(200).json(xmlParser.parse(data));
 	} catch (err) {
 		console.log('ERRO', err);
 		res.status(500).json(err);

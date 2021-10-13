@@ -7,16 +7,16 @@
 		<link
 			rel="icon"
 			type="image/x-icon"
-			href="./images/pridebook-favicon.png"
+			href="../images/pridebook-favicon.png"
 		/>
 		<title>Demo assinatura de serviço - Gerenciar assinatura</title>
 		<script
 			defer
-			src="../node_modules/@fortawesome/fontawesome-free/js/all.min.js"
+			src="../../node_modules/@fortawesome/fontawesome-free/js/all.min.js"
 		></script>
 		<script
 			defer
-			src="../node_modules/@fortawesome/fontawesome-free/js/fontawesome.js"
+			src="../../node_modules/@fortawesome/fontawesome-free/js/fontawesome.js"
 		></script>
 		<link
 			rel="stylesheet"
@@ -47,15 +47,22 @@
 
 			<div id="navbarExampleTransparentExample" class="navbar-menu">
 				<div class="navbar-start">
-					<a class="navbar-item" href="/subscription-demo/public/"> Home </a>
+					<a class="navbar-item" href="/subscription-demo/public/pages/">
+						Home
+					</a>
 					<div class="navbar-item">
 						<a
 							class="navbar-link"
-							href="localhost/subscription-demo/public/gerenciar-assinatura"
+							href="/subscription-demo/public/pages/gerenciar-assinatura.html"
 						>
 							Gerenciar Assinatura
 						</a>
-						<a class="navbar-link" href="#"> Histórico (WIP) </a>
+						<a
+							class="navbar-link"
+							href="/subscription-demo/public/pages/transactions.html"
+						>
+							Histórico (WIP)
+						</a>
 					</div>
 				</div>
 			</div>
@@ -126,7 +133,7 @@
 			</div>
 		</section>
 
-		<script src="./js-brasil.js"></script>
+		<script src="../js/js-brasil.js"></script>
 		<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 		<script
 			type="text/javascript"
@@ -138,6 +145,6 @@
 			crossorigin="anonymous"
 			referrerpolicy="no-referrer"
 		></script>
-		<script src="./manage-subs.js" type="module"></script>
+		<script src="../js/manage-subs.js" type="module"></script>
 	</body>
 </html>
