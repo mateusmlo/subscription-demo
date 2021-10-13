@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+		<link
+			rel="icon"
+			type="image/x-icon"
+			href="../images/pridebook-favicon.png"
+		/>
+		<title>Demo assinatura de serviço</title>
+
+		<script src="https://www.google.com/recaptcha/api.js"></script>
+		<script
+			defer
+			src="../../node_modules/@fortawesome/fontawesome-free/js/all.min.js"
+		></script>
+		<script
+			defer
+			src="../../node_modules/@fortawesome/fontawesome-free/js/fontawesome.js"
+		></script>
+		<link
+			rel="stylesheet"
+			href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css"
+		/>
+	</head>
+
+	<body class="has-navbar-fixed-top">
+		<nav class="navbar is-transparent is-fixed-top">
+			<div class="navbar-brand">
+				<a class="navbar-item">
+					<img
+						src="../images/pridebook-texto-inner.png"
+						alt="Pridebook social network"
+						class="navbar-burger"
+						data-target="navbarExampleTransparentExample"
+					/>
+					<span></span>
+					<span></span>
+					<span></span>
+				</a>
+			</div>
+			<div id="navbarExampleTransparentExample" class="navbar-menu">
+				<div class="navbar-start">
+					<a class="navbar-item" href="/subscription-demo/public/pages/">
+						Home
+					</a>
+					<div class="navbar-item">
+						<a
+							class="navbar-link"
+							href="/subscription-demo/public/pages/gerenciar-assinatura.html"
+						>
+							Gerenciar Assinatura
+						</a>
+						<a
+							class="navbar-link"
+							href="/subscription-demo/public/pages/transactions.html"
+						>
+							Histórico (WIP)
+						</a>
+					</div>
+				</div>
+			</div>
+		</nav>
+		<section class="section">
+			<div class="container">
+				<h1 class="title">Assinatura Plano</h1>
+				<p class="subtitle">
+					Teste de assinatura e pagamentos feito com <strong>Bulma</strong>
+				</p>
+
+				<div class="tile is-ancestor">
+					<div class="tile is-vertical is-8">
+						<div class="tile">
+							<div class="tile is-parent is-vertical" id="checkout-tile">
+								<article class="tile is-child notification">
+									<p class="title is-2">Checkout</p>
+									<br />
+
+									<form method="POST" id="CheckoutForm">
+										<h2 class="subtitle is-4">Dados pessoais</h2>
+										<div class="columns">
+											<div class="field column is-half">
+												<p class="control has-icons-left has-icons-right">
+													<input
+														required
+														class="input"
+														type="email"
+														placeholder="Email"
+														id="senderMail"
+													/>
+													<span class="icon is-small is-left">
+														<i class="fas fa-envelope"></i>
+													</span>
+												</p>
+											</div>
+											<div class="field column">
+												<p class="control has-icons-left">
+													<input
+														required
+														class="input"
+														type="text"
+														placeholder="Nome"
+														id="senderName"
+													/>
+													<span class="icon is-small is-left">
+														<i class="fas fa-user"></i>
+													</span>
+												</p>
+											</div>
+										</div>
+
+										<div class="columns">
+											<div class="field column is-one-fifth">
+												<p class="control">
+													<input
+														required
+														class="input"
+														type="text"
+														placeholder="DDD"
+													/>
+												</p>
+											</div>
+											<div class="field column is-one-quarter">
+												<p class="control has-icons-left">
+													<input
+														required
+														class="input"
+														type="tel"
+														placeholder="Telefone"
+														maxlength="9"
+													/>
+													<span class="icon is-small is-left">
+														<i class="fas fa-phone"></i>
+													</span>
+													<small>*Apenas números</small>
+												</p>
+											</div>
+											<div class="field column">
+												<p class="control has-icons-left">
+													<input
+														required
+														class="input"
+														type="text"
+														placeholder="CPF"
+														id="senderCpf"
+														maxlength="11"
+													/>
+													<span class="icon is-small is-left">
+														<i class="fas fa-id-card"></i>
+													</span>
+													<small>*Apenas números</small>
+												</p>
+											</div>
+										</div>
+
+										<div class="columns">
+											<div class="field column is-half">
+												<p class="control has-icons-left has-icons-right">
+													<input
+														required
+														class="input"
+														type="text"
+														placeholder="Endereço"
+													/>
+													<span class="icon is-left">
+														<i class="fas fa-building"></i>
+													</span>
+												</p>
+											</div>
+											<div class="field column is-one-fifth">
+												<p class="control">
+													<input
+														required
+														class="input"
+														type="text"
+														placeholder="Numero"
+													/>
+												</p>
+											</div>
+											<div class="field column">
+												<p class="control">
+													<input
+														class="input addressComplement"
+														type="text"
+														placeholder="Complemento"
+													/>
+												</p>
+											</div>
+										</div>
+
+										<div class="columns">
+											<div class="field column is-one-quarter">
+												<p class="control">
+													<input
+														required
+														class="input"
+														type="text"
+														placeholder="CEP"
+														id="senderCep"
+														maxlength="9"
+													/>
+												</p>
+											</div>
+											<div class="field column">
+												<p class="control">
+													<input
+														required
+														class="input"
+														type="text"
+														placeholder="Bairro"
+													/>
+												</p>
+											</div>
+											<div class="field column is-one-fifth">
+												<p class="control">
+													<input
+														required
+														class="input"
+														type="text"
+														placeholder="Cidade"
+													/>
+												</p>
+											</div>
+											<div class="field column">
+												<p class="control">
+													<input
+														required
+														class="input"
+														type="text"
+														placeholder="Estado"
+													/>
+												</p>
+											</div>
+										</div>
+
+										<br />
+										<div id="CreditCardData">
+											<h2 class="subtitle is-4">Dados de pagamento</h2>
+											<div class="columns">
+												<div class="field column is-one-third">
+													<p class="control has-icons-left">
+														<input
+															required
+															class="input"
+															type="text"
+															placeholder="Nº cartão"
+															id="creditCardNumber"
+															maxlength="16"
+														/>
+														<span class="icon is-small is-left">
+															<i class="fas fa-credit-card"></i>
+														</span>
+													</p>
+												</div>
+												<div class="field column is-one-quarter">
+													<p class="control">
+														<input
+															required
+															readonly
+															class="input"
+															type="text"
+															placeholder="Bandeira"
+															id="cardBrand"
+														/>
+													</p>
+												</div>
+												<div class="field column is-one-sixth">
+													<p class="control">
+														<input
+															required
+															class="input"
+															type="text"
+															placeholder="CVV"
+															maxlength="3"
+														/>
+													</p>
+												</div>
+												<div class="field column">
+													<p class="control">
+														<input
+															required
+															class="input"
+															type="text"
+															placeholder="Mês exp"
+															maxlength="2"
+														/>
+													</p>
+												</div>
+												<div class="field column">
+													<p class="control">
+														<input
+															required
+															class="input"
+															type="text"
+															placeholder="Ano exp"
+															maxlength="4"
+														/>
+													</p>
+												</div>
+											</div>
+											<div class="buttons">
+												<button
+													class="button is-info"
+													type="button"
+													id="confirmCard"
+												>
+													Validar cartão de crédito
+												</button>
+											</div>
+										</div>
+
+										<br />
+										<h2 class="subtitle is-4">Dados de faturamento</h2>
+										<div class="columns">
+											<div class="field column is-half">
+												<p class="control has-icons-left has-icons-right">
+													<input
+														required
+														class="input"
+														type="email"
+														placeholder="Nome"
+													/>
+													<span class="icon is-small is-left">
+														<i class="fas fa-envelope"></i>
+													</span>
+													<small>*Como consta no cartão</small>
+												</p>
+											</div>
+											<div class="field column">
+												<p class="control">
+													<input
+														required
+														class="input"
+														type="date"
+														placeholder="Data de nasc."
+													/>
+												</p>
+											</div>
+											<div class="field column">
+												<p class="control">
+													<input
+														required
+														class="input"
+														type="text"
+														placeholder="CPF"
+														id="paymentCpf"
+														maxlength="11"
+													/>
+													<small>*Apenas números</small>
+												</p>
+											</div>
+										</div>
+
+										<div class="columns">
+											<div class="field column is-one-fifth">
+												<p class="control">
+													<input
+														required
+														class="input"
+														type="text"
+														placeholder="DDD"
+														maxlength="3"
+													/>
+												</p>
+											</div>
+											<div class="field column is-one-quarter">
+												<p class="control has-icons-left">
+													<input
+														required
+														class="input"
+														type="tel"
+														placeholder="Telefone"
+														maxlength="9"
+													/>
+													<span class="icon is-small is-left">
+														<i class="fas fa-phone"></i>
+													</span>
+												</p>
+											</div>
+											<div class="field column">
+												<p class="control">
+													<input
+														required
+														class="input"
+														type="text"
+														placeholder="CEP"
+														id="paymentCep"
+														maxlength="11"
+													/>
+												</p>
+											</div>
+										</div>
+
+										<div class="columns">
+											<div class="field column is-half">
+												<p class="control has-icons-left has-icons-right">
+													<input
+														required
+														class="input"
+														type="text"
+														placeholder="Endereço"
+													/>
+													<span class="icon is-left">
+														<i class="fas fa-building"></i>
+													</span>
+												</p>
+											</div>
+											<div class="field column is-one-fifth">
+												<p class="control">
+													<input
+														required
+														class="input"
+														type="text"
+														placeholder="Numero"
+													/>
+												</p>
+											</div>
+											<div class="field column">
+												<p class="control">
+													<input
+														class="input addressComplement"
+														type="text"
+														placeholder="Complemento"
+													/>
+												</p>
+											</div>
+										</div>
+
+										<div class="columns">
+											<div class="field column">
+												<p class="control has-icons-left has-icons-right">
+													<input
+														required
+														class="input"
+														type="text"
+														placeholder="Bairro"
+													/>
+												</p>
+											</div>
+											<div class="field column is-one-fifth">
+												<p class="control has-icons-left">
+													<input
+														required
+														class="input"
+														type="text"
+														placeholder="Cidade"
+													/>
+												</p>
+											</div>
+											<div class="field column">
+												<p class="control has-icons-left">
+													<input
+														required
+														class="input"
+														type="text"
+														placeholder="Estado"
+													/>
+												</p>
+											</div>
+										</div>
+
+										<div class="buttons">
+											<button
+												class="button is-primary is-large g-recaptcha"
+												type="button"
+												id="paySub"
+												data-sitekey="6LfwtsocAAAAAM0mr0P6pvd7rXVTCPc9PO2XPWbs"
+												data-callback="onSubmit"
+												data-action="submit"
+											>
+												Enviar
+											</button>
+										</div>
+									</form>
+								</article>
+							</div>
+						</div>
+					</div>
+					<div class="tile is-parent">
+						<article class="tile is-child notification is-dark">
+							<div class="content">
+								<p class="title">Resumo da compra</p>
+								<hr />
+								<div class="content">
+									<p class="title">Plano Premium</p>
+									<p>
+										Desbloqueie novas funcionalidades e atinja seus objetivos! O
+										nosso plano premium é para você que busca novos ares.
+									</p>
+									<div class="columns">
+										<h2 class="title column is-half">Valor:</h2>
+										<h4 class="title column">R$ 350,00</h4>
+									</div>
+								</div>
+							</div>
+						</article>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<script>
+			function onSubmit(token, e) {
+				e.preventDefault();
+				document.getElementById('CheckoutForm').submit();
+			}
+		</script>
+
+		<script src="../js/js-brasil.js"></script>
+		<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+		<script
+			type="text/javascript"
+			src="https://stc.sandbox.pagseguro.uol.com.br/pagseguro/api/v2/checkout/pagseguro.directpayment.js"
+		></script>
+		<script
+			src="https://cdnjs.cloudflare.com/ajax/libs/fast-xml-parser/3.19.0/parser.min.js"
+			integrity="sha512-kAe/WiFMBWVEk/QKvH9XbN/Dyn6HwHDVbN2ZLh5Bi0HExEJ3tn5HSIWFc6JMQz5Xq9fkb02+k5QsoRkbKhPDlQ=="
+			crossorigin="anonymous"
+			referrerpolicy="no-referrer"
+		></script>
+		<script src="../js/index.js" type="module"></script>
+		<script src="../js/validations.js" type="module"></script>
+	</body>
+</html>

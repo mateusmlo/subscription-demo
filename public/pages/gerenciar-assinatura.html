@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<link
+			rel="icon"
+			type="image/x-icon"
+			href="../images/pridebook-favicon.png"
+		/>
+		<title>Demo assinatura de serviço - Gerenciar assinatura</title>
+		<script
+			defer
+			src="../../node_modules/@fortawesome/fontawesome-free/js/all.min.js"
+		></script>
+		<script
+			defer
+			src="../../node_modules/@fortawesome/fontawesome-free/js/fontawesome.js"
+		></script>
+		<link
+			rel="stylesheet"
+			href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css"
+		/>
+	</head>
+
+	<body class="has-navbar-fixed-top">
+		<nav class="navbar is-transparent is-fixed-top">
+			<div class="navbar-brand">
+				<a class="navbar-item" href="https://bulma.io">
+					<img
+						src="./images/pridebook-texto-inner.png"
+						alt="Pridebook social network"
+						class="navbar-burger"
+						data-target="navbarExampleTransparentExample"
+					/>
+				</a>
+				<div
+					class="navbar-burger"
+					data-target="navbarExampleTransparentExample"
+				>
+					<span></span>
+					<span></span>
+					<span></span>
+				</div>
+			</div>
+
+			<div id="navbarExampleTransparentExample" class="navbar-menu">
+				<div class="navbar-start">
+					<a class="navbar-item" href="/subscription-demo/public/pages/">
+						Home
+					</a>
+					<div class="navbar-item">
+						<a
+							class="navbar-link"
+							href="/subscription-demo/public/pages/gerenciar-assinatura.html"
+						>
+							Gerenciar Assinatura
+						</a>
+					</div>
+					<div class="navbar-item">
+						<a
+							class="navbar-link"
+							href="/subscription-demo/public/pages/transactions.html"
+						>
+							Histórico (WIP)
+						</a>
+					</div>
+				</div>
+			</div>
+		</nav>
+		<section class="section">
+			<div class="container">
+				<h1 class="title">Gerenciar Assinatura</h1>
+				<p class="subtitle">
+					Teste de assinatura e pagamentos feito com <strong>Bulma</strong>
+				</p>
+
+				<div class="columns">
+					<div class="card column is-half">
+						<header class="card-header">
+							<p class="card-header-title">Suspender Assinatura</p>
+						</header>
+						<div class="card-content">
+							<div class="content">
+								Suspende a assinatura. Você não será mais cobrado mensalmente,
+								mas também perderá todos os benefícios do plano. Pode ser
+								reativada a qualquer momento!
+
+								<br />
+								<br />
+
+								<div class="buttons">
+									<button
+										class="button is-warning is-large"
+										type="button"
+										id="suspendSub"
+									>
+										Suspender
+									</button>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<br /><br />
+				<div class="columns">
+					<div class="card column is-half">
+						<header class="card-header">
+							<p class="card-header-title">Reativar Assinatura</p>
+						</header>
+						<div class="card-content">
+							<div class="content">
+								Bem-vindo de volta! Esperamos que fique por muito mais tempo
+								agora, temos muitas novidades que você com certeza irá curtir.
+								Ao reativar sua assinatura, a cobrança mensal do plano também
+								será retomada!
+								<br />
+								<br />
+
+								<div class="buttons">
+									<button
+										class="button is-primary is-large"
+										type="button"
+										id="resumeSub"
+									>
+										Reativar
+									</button>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<script src="../js/js-brasil.js"></script>
+		<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+		<script
+			type="text/javascript"
+			src="https://stc.sandbox.pagseguro.uol.com.br/pagseguro/api/v2/checkout/pagseguro.directpayment.js"
+		></script>
+		<script
+			src="https://cdnjs.cloudflare.com/ajax/libs/fast-xml-parser/3.19.0/parser.min.js"
+			integrity="sha512-kAe/WiFMBWVEk/QKvH9XbN/Dyn6HwHDVbN2ZLh5Bi0HExEJ3tn5HSIWFc6JMQz5Xq9fkb02+k5QsoRkbKhPDlQ=="
+			crossorigin="anonymous"
+			referrerpolicy="no-referrer"
+		></script>
+		<script src="../js/manage-subs.js" type="module"></script>
+	</body>
+</html>
