@@ -17,7 +17,7 @@ const routes = express.Router();
 routes.post('/get-session', async (req, res) => {
 	try {
 		const { data } = await axios.request({
-			url: `https://ws.sandbox.pagseguro.uol.com.br/v2/sessions`,
+			url: `http://ws.sandbox.pagseguro.uol.com.br/v2/sessions`,
 			method: 'post',
 			params: {
 				email: email,

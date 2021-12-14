@@ -17,6 +17,7 @@
 		"fast-xml-parser": "^3.19.0",
 		"js-brasil": "^2.4.9",
 		"js2xmlparser": "^4.0.1",
+		"mysql2": "^2.3.3",
 		"nodemon": "^2.0.12",
 		"pg": "^8.7.1",
 		"pg-hstore": "^2.3.4",

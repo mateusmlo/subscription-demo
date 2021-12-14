@@ -2,7 +2,7 @@ import { buildPaymentBody, checkEmptyInputs } from './utils.js';
 
 window.addEventListener('DOMContentLoaded', async () => {
 	const { data } = await axios.request({
-		url: `https://localhost:3000/get-session`,
+		url: `http://localhost:3001/get-session`,
 		method: 'post'
 	});
 
@@ -114,7 +114,7 @@ window.addEventListener('DOMContentLoaded', async () => {
 
 		try {
 			const { data } = await axios.request({
-				url: 'https://localhost:3000/subscribe',
+				url: 'http://localhost:3001/subscribe',
 				method: 'post',
 				data: { subscriptionBody: paymentBody }
 			});
