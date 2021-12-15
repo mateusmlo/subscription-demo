@@ -17,7 +17,8 @@ app.use(json());
 app.use(urlencoded({ extended: true }));
 app.use(routes);
 
-db.sync().then(() => console.log('✅ Succesfully connected to the database'));
+//* a database sempre inicia zerada
+db.sync();
 
 
 app.listen(3001, () => {

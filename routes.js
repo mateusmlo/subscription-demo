@@ -7,7 +7,7 @@ const express = require('express'),
 		resumeSubscription,
 		subscriptionsHistory
 	} = require('./controllers/sender.controller'),
-	validateRequest = require('./validations/validate-request');
+	validateRequest = require('./middlewares/validate-request');
 
 const email = process.env.PAGSEG_EMAIL;
 const token = process.env.PAGSEG_TOKEN;
